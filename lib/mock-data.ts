@@ -130,6 +130,89 @@ export const wallet = {
   ],
 }
 
+export type LinkedAccount = {
+  id: string
+  bank: string
+  country: string
+  flag: string
+  currency: string
+  symbol: string
+  balance: number
+  last4: string
+  nfc: boolean
+  primary?: boolean
+}
+
+// Indicative FX rates expressed as: 1 unit of currency = N AEG.
+// AEG acts as the settlement bridge asset between fiat currencies.
+export const fxToAeg: Record<string, number> = {
+  USD: 0.409,
+  EUR: 0.44,
+  GBP: 0.515,
+  JPY: 0.00275,
+  KES: 0.00316,
+  BRL: 0.081,
+  AEG: 1,
+}
+
+export const currencyMeta: Record<string, { symbol: string; label: string; flag: string }> = {
+  USD: { symbol: "$", label: "US Dollar", flag: "US" },
+  EUR: { symbol: "€", label: "Euro", flag: "EU" },
+  GBP: { symbol: "£", label: "British Pound", flag: "GB" },
+  JPY: { symbol: "¥", label: "Japanese Yen", flag: "JP" },
+  KES: { symbol: "KSh", label: "Kenyan Shilling", flag: "KE" },
+  BRL: { symbol: "R$", label: "Brazilian Real", flag: "BR" },
+}
+
+export const linkedAccounts: LinkedAccount[] = [
+  {
+    id: "ba-1",
+    bank: "Cascade Federal Credit Union",
+    country: "United States",
+    flag: "US",
+    currency: "USD",
+    symbol: "$",
+    balance: 4820.16,
+    last4: "8841",
+    nfc: true,
+    primary: true,
+  },
+  {
+    id: "ba-2",
+    bank: "Meridian Financial Union",
+    country: "Germany",
+    flag: "EU",
+    currency: "EUR",
+    symbol: "€",
+    balance: 1290.44,
+    last4: "2093",
+    nfc: true,
+  },
+  {
+    id: "ba-3",
+    bank: "Rift Valley Mobile Bank",
+    country: "Kenya",
+    flag: "KE",
+    currency: "KES",
+    symbol: "KSh",
+    balance: 82400.0,
+    last4: "5510",
+    nfc: false,
+  },
+]
+
+// Forward-looking settlement unit: time + surplus clean power.
+export const chronos = {
+  unit: "CHR",
+  name: "Chronos",
+  tagline: "Time + surplus clean power",
+  balance: "48.2",
+  breakdown: [
+    { label: "Community project hours", value: "31.0 h", note: "Climate restoration · levee planting" },
+    { label: "Surplus power fed to grid", value: "142 kWh", note: "Rooftop array · net contribution" },
+  ],
+}
+
 export const meshNodes: MeshNode[] = [
   { id: "n0", handle: "R. Vasquez", role: "Water Systems II", x: 50, y: 52, hops: 0, rssi: -42, battery: 82, self: true, online: true },
   { id: "n1", handle: "T. Okafor", role: "Water Systems III", x: 28, y: 32, hops: 1, rssi: -68, battery: 64, online: true },
