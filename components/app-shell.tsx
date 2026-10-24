@@ -15,8 +15,8 @@ const NAV: { id: Surface; label: string; icon: typeof Watch; blurb: string }[] =
 
 const HEADINGS: Record<Surface, { title: string; sub: string }> = {
   device: {
-    title: "The Aegis wearable",
-    sub: "Self-custodied identity, credentials, and a mesh-native wallet — with a public field-intelligence feed anyone can read.",
+    title: "Tanmatsu field firmware",
+    sub: "A compact, offline-first interface for identity, credentials, mesh telemetry, and field reports on the Tanmatsu device.",
   },
   mesh: {
     title: "LoRa mesh network",
@@ -41,8 +41,8 @@ export function AppShell() {
             <ShieldCheck className="size-5" />
           </span>
           <div>
-            <p className="font-display text-lg font-bold leading-none tracking-tight">AEGIS</p>
-            <p className="font-mono text-[11px] text-muted-foreground">Sovereign wearable · offline-first</p>
+            <p className="font-display text-lg font-bold leading-none tracking-tight">TANMATSU</p>
+            <p className="font-mono text-[11px] text-muted-foreground">field firmware demo · v0.4.2</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -98,7 +98,7 @@ export function AppShell() {
       </main>
 
       <footer className="mt-12 border-t border-border pt-4 font-mono text-[11px] text-muted-foreground">
-        Aegis prototype · concept demonstration · all data simulated
+        Tanmatsu firmware demo · simulated hardware telemetry · build 0.4.2
       </footer>
     </div>
   )

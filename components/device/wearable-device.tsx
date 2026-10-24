@@ -39,7 +39,7 @@ export function WearableDevice() {
         <div className="rounded-[2rem] border border-border bg-card p-3 shadow-2xl shadow-primary/5">
           {/* bezel top */}
           <div className="mb-3 flex items-center justify-between px-2">
-            <span className="font-display text-sm font-bold tracking-[0.2em] text-foreground">AEGIS</span>
+            <span className="font-display text-sm font-bold tracking-[0.2em] text-foreground">TANMATSU</span>
             <div className="flex items-center gap-1.5 rounded-full bg-secondary px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
               <span className="inline-block size-1.5 rounded-full bg-accent" /> LORA MESH
             </div>
