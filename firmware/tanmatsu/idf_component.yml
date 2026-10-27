@@ -1,0 +1,5 @@
+dependencies:
+  badgeteam/appfs:
+    version: ">=0.1.0"
+    rules:
+      - if: "target == esp32p4"

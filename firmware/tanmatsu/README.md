@@ -35,6 +35,14 @@ The demo maps the template's eventual input layer to these actions:
 - Back / home: GPIO 1 fallback
 - The screen router and state model are ready for the Tanmatsu keyboard event queue.
 
+## AppFS and Wadamesh integration
+
+The project declares the Badge.Team `badgeteam/appfs` ESP-IDF component so the resulting application can be packaged for the Tanmatsu launcher/AppFS model. It does not replace the launcher or write factory partitions. Follow the official AppFS/Tanmatsu packaging workflow for the exact template revision in use.
+
+Wadamesh compatibility is tracked against `https://github.com/ALLFATHER-BV/wadamesh`. This demo only reserves the integration boundary; it does not claim wire-level compatibility until the Wadamesh protocol and the Nicolai Electronics device SDK revision are pinned. No network credentials or keys are embedded.
+
+Document trust is advisory and entirely on-device. The demo compares locally supplied metadata and reference records; it never fetches public registries from firmware, treats a score as proof, or uploads document contents/hashes. An authorized issuer must still verify every document.
+
 ## Build caveat
 
 The repository does not vendor the proprietary/device-specific Tanmatsu BSP. The official template must provide the matching `pax_code` component, display initialization, framebuffer flush, and keyboard adapter. The application-level state and rendering code lives in `main/main.c`; wire those template APIs in before claiming a hardware-tested image.

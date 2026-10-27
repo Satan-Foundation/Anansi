@@ -32,7 +32,16 @@ typedef enum {
     SCREEN_MESH,
     SCREEN_FIELD,
     SCREEN_VERIFY,
+    SCREEN_DOCUMENTS,
 } aegis_screen_t;
+
+typedef struct {
+    const char *name;
+    bool signature_present;
+    bool issuer_match;
+    bool date_valid;
+    uint8_t public_comparison_count;
+} local_document_t;
 
 typedef struct {
     aegis_screen_t screen;
@@ -40,6 +49,23 @@ typedef struct {
     uint8_t trust;
     bool simulation;
 } aegis_state_t;
+
+static const local_document_t local_document = {
+    .name = "FIELD ACCESS PASS",
+    .signature_present = true,
+    .issuer_match = true,
+    .date_valid = true,
+    .public_comparison_count = 2,
+};
+
+static uint8_t advisory_document_score(const local_document_t *document) {
+    uint8_t score = 0;
+    if (document->signature_present) score += 35;
+    if (document->issuer_match) score += 30;
+    if (document->date_valid) score += 20;
+    if (document->public_comparison_count > 0) score += 15;
+    return score;
+}
 
 static aegis_state_t state = {
     .screen = SCREEN_HOME,
@@ -144,8 +170,27 @@ static void draw_screen(void) {
             break;
         }
         case SCREEN_VERIFY: {
-            const char *items[] = {"SCAN CREDENTIAL", "VERIFY SIGNATURE", "VIEW TRUST PATH", "CLEAR SESSION"};
+            const char *items[] = {"SCAN CREDENTIAL", "VERIFY SIGNATURE", "DOCUMENT TRUST", "CLEAR SESSION"};
             draw_list("VERIFICATION", "Local verification console", items, 4);
+            break;
+        }
+        case SCREEN_DOCUMENTS: {
+            uint8_t score = advisory_document_score(&local_document);
+            draw_header("DOCUMENT TRUST");
+            text("ADVISORY / ON-DEVICE ONLY", PANEL_X, 88, 14, 0xF6C76B);
+            text(local_document.name, PANEL_X, 126, 24, 0xE6F7FA);
+            text("TRUST SCORE", PANEL_X, 178, 12, 0x84A1B1);
+            char score_text[8];
+            snprintf(score_text, sizeof(score_text), "%u / 100", score);
+            text(score_text, PANEL_X, 198, 32, 0x6EE7F2);
+            text("Signature present", PANEL_X, 260, 14, 0xB4CAD2);
+            text(local_document.signature_present ? "YES" : "NO", 310, 260, 14, 0x6EE7F2);
+            text("Issuer/date checks", PANEL_X, 288, 14, 0xB4CAD2);
+            text((local_document.issuer_match && local_document.date_valid) ? "PASS" : "REVIEW", 310, 288, 14, 0x6EE7F2);
+            text("Public comparisons", PANEL_X, 316, 14, 0xB4CAD2);
+            text("2 local references", 310, 316, 14, 0x6EE7F2);
+            text("Not proof of authenticity. Verify through an authorized issuer.", PANEL_X, 376, 12, 0xF6C76B);
+            draw_nav();
             break;
         }
     }
