@@ -1,4 +1,4 @@
-export type ThemeName = "civic" | "tactical" | "cyberpunk"
+export type ThemeName = "civic" | "tactical" | "cyberpunk" | "infernal"
 
 export type Credential = {
   id: string

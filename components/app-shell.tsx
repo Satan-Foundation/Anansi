@@ -1,6 +1,7 @@
 "use client"
 
-import { Activity, Network, ShieldCheck, Watch } from "lucide-react"
+import { useState } from "react"
+import { Activity, Network, Settings, ShieldCheck, Watch } from "lucide-react"
 import { useAegis, type Surface } from "@/components/aegis-context"
 import { ThemeSwitcher } from "@/components/theme-switcher"
 import { WearableDevice } from "@/components/device/wearable-device"
@@ -30,6 +31,7 @@ const HEADINGS: Record<Surface, { title: string; sub: string }> = {
 
 export function AppShell() {
   const { surface, setSurface } = useAegis()
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const h = HEADINGS[surface]
 
   return (
@@ -53,7 +55,27 @@ export function AppShell() {
           <span className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 font-mono text-[11px] text-muted-foreground sm:flex">
             <Activity className="size-3 text-accent" /> mesh live · 7 peers
           </span>
-          <ThemeSwitcher />
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setSettingsOpen((open) => !open)}
+              aria-expanded={settingsOpen}
+              aria-controls="user-settings"
+              className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+            >
+              <Settings className="size-4" />
+              Settings
+            </button>
+            {settingsOpen && (
+              <div id="user-settings" className="absolute right-0 top-full z-10 mt-2 w-72 rounded-xl border border-border bg-popover p-4 text-popover-foreground shadow-xl">
+                <div className="mb-3">
+                  <p className="text-sm font-semibold">User settings</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Choose the field interface color scheme.</p>
+                </div>
+                <ThemeSwitcher />
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
