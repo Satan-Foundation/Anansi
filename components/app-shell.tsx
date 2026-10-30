@@ -15,7 +15,7 @@ const NAV: { id: Surface; label: string; icon: typeof Watch; blurb: string }[] =
 
 const HEADINGS: Record<Surface, { title: string; sub: string }> = {
   device: {
-    title: "Tanmatsu field firmware",
+    title: "The Grimoir",
     sub: "A compact, offline-first interface for identity, credentials, mesh telemetry, and field reports on the Tanmatsu device.",
   },
   mesh: {
@@ -37,12 +37,16 @@ export function AppShell() {
       {/* header */}
       <header className="flex flex-col gap-4 border-b border-border pb-6 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-3">
-          <span className="flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <ShieldCheck className="size-5" />
+          <span className="flex size-10 items-center justify-center overflow-hidden rounded-lg border border-primary/40 bg-background">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Satan%20Foundation%20Logo-hEajY7H8bDxDAHz6IwseHwX8BV5Lck.jpg"
+              alt="The Satan Foundation sigil"
+              className="size-full object-cover object-[center_68%] mix-blend-multiply dark:invert"
+            />
           </span>
           <div>
-            <p className="font-display text-lg font-bold leading-none tracking-tight">TANMATSU</p>
-            <p className="font-mono text-[11px] text-muted-foreground">field firmware demo · v0.4.2</p>
+            <p className="font-display text-lg font-bold leading-none tracking-tight">THE GRIMOIR</p>
+            <p className="font-mono text-[11px] text-muted-foreground">Satan Foundation field interface · v0.4.2</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -98,7 +102,7 @@ export function AppShell() {
       </main>
 
       <footer className="mt-12 border-t border-border pt-4 font-mono text-[11px] text-muted-foreground">
-        Tanmatsu firmware demo · simulated hardware telemetry · build 0.4.2
+        The Grimoir · Satan Foundation field interface · build 0.4.2
       </footer>
     </div>
   )

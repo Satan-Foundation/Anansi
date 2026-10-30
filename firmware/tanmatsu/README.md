@@ -1,4 +1,4 @@
-# AEGIS Tanmatsu firmware demo
+# The Grimoir — Tanmatsu firmware
 
 This directory is a native ESP-IDF application for the Tanmatsu ESP32-P4 device. It is intentionally separate from the Next.js prototype in the repository.
 

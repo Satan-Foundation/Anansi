@@ -8,9 +8,9 @@ const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono'
 const newsreader = Newsreader({ subsets: ['latin'], variable: '--font-newsreader' })
 
 export const metadata: Metadata = {
-  title: 'Tanmatsu — Field Firmware Demo',
+  title: 'The Grimoir — Satan Foundation',
   description:
-    'A Tanmatsu firmware demo for offline identity, mesh telemetry, credentials, and field intelligence.',
+    'The Grimoir is a Satan Foundation field interface for offline identity, mesh telemetry, credentials, and field intelligence.',
   generator: 'v0.app',
 }
 

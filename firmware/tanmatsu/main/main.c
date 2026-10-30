@@ -100,7 +100,7 @@ static void outline(int x, int y, int w, int h, uint16_t color) {
 
 static void draw_header(const char *title) {
     rect(0, 0, SCREEN_WIDTH, HEADER_HEIGHT, 0x102033);
-    text("AEGIS", 28, 16, 22, 0xD7F7FF);
+    text("GRIMOIR", 28, 16, 22, 0xD7F7FF);
     text(title, 148, 19, 14, 0x8BA8B7);
     text(state.simulation ? "SIMULATION" : "LIVE", 626, 19, 12, 0xF6C76B);
     rect(746, 19, 10, 10, 0x4ADE80);
@@ -223,7 +223,7 @@ static void handle_input(void) {
 }
 
 void app_main(void) {
-    ESP_LOGI(TAG, "Starting AEGIS Tanmatsu standalone firmware");
+    ESP_LOGI(TAG, "Starting The Grimoir standalone firmware");
     ESP_LOGW(TAG, "SIMULATION mode: identity, mesh, and verification are not cryptographic");
 
     esp_err_t nvs_result = nvs_flash_init();
