@@ -4,7 +4,7 @@ This directory is a native ESP-IDF application for the Tanmatsu ESP32-P4 device.
 
 ## Status
 
-This is an installable launcher-style firmware demo, not a replacement bootloader or factory image. The identity, mesh, wallet, telemetry, and verification screens use deterministic simulated data and are clearly marked `SIMULATION`. No private keys, real credentials, network protocol, or cryptographic verification are implemented yet.
+This is a standalone ESP-IDF firmware image for the standard Tanmatsu ESP32-P4 target. It initializes the Tanmatsu BSP, allocates the display framebuffer through PAX, flushes frames to the physical display, and exposes the native app entry point used by the bootable image. Identity, mesh, wallet, telemetry, and verification data remain deterministic and are clearly marked `SIMULATION`; no private keys, real credentials, network protocol, or cryptographic verification are implemented yet.
 
 ## Linux setup
 
