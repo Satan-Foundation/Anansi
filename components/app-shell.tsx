@@ -1,6 +1,7 @@
 "use client"
 
-import { Activity, Network, ShieldCheck, Watch } from "lucide-react"
+import { useState } from "react"
+import { Activity, Network, Settings, ShieldCheck, Watch } from "lucide-react"
 import { useAegis, type Surface } from "@/components/aegis-context"
 import { ThemeSwitcher } from "@/components/theme-switcher"
 import { WearableDevice } from "@/components/device/wearable-device"
@@ -15,7 +16,7 @@ const NAV: { id: Surface; label: string; icon: typeof Watch; blurb: string }[] =
 
 const HEADINGS: Record<Surface, { title: string; sub: string }> = {
   device: {
-    title: "Tanmatsu field firmware",
+    title: "The Grimoir",
     sub: "A compact, offline-first interface for identity, credentials, mesh telemetry, and field reports on the Tanmatsu device.",
   },
   mesh: {
@@ -30,6 +31,7 @@ const HEADINGS: Record<Surface, { title: string; sub: string }> = {
 
 export function AppShell() {
   const { surface, setSurface } = useAegis()
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const h = HEADINGS[surface]
 
   return (
@@ -37,19 +39,43 @@ export function AppShell() {
       {/* header */}
       <header className="flex flex-col gap-4 border-b border-border pb-6 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-3">
-          <span className="flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <ShieldCheck className="size-5" />
+          <span className="flex size-10 items-center justify-center overflow-hidden rounded-lg border border-primary/40 bg-background">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Satan%20Foundation%20Logo-hEajY7H8bDxDAHz6IwseHwX8BV5Lck.jpg"
+              alt="The Satan Foundation sigil"
+              className="size-full object-cover object-[center_68%] mix-blend-multiply dark:invert"
+            />
           </span>
           <div>
-            <p className="font-display text-lg font-bold leading-none tracking-tight">TANMATSU</p>
-            <p className="font-mono text-[11px] text-muted-foreground">field firmware demo · v0.4.2</p>
+            <p className="font-display text-lg font-bold leading-none tracking-tight">THE GRIMOIR</p>
+            <p className="font-mono text-[11px] text-muted-foreground">Satan Foundation field interface · v0.4.2</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <span className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 font-mono text-[11px] text-muted-foreground sm:flex">
             <Activity className="size-3 text-accent" /> mesh live · 7 peers
           </span>
-          <ThemeSwitcher />
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setSettingsOpen((open) => !open)}
+              aria-expanded={settingsOpen}
+              aria-controls="user-settings"
+              className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+            >
+              <Settings className="size-4" />
+              Settings
+            </button>
+            {settingsOpen && (
+              <div id="user-settings" className="absolute right-0 top-full z-10 mt-2 w-72 rounded-xl border border-border bg-popover p-4 text-popover-foreground shadow-xl">
+                <div className="mb-3">
+                  <p className="text-sm font-semibold">User settings</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Choose the field interface color scheme.</p>
+                </div>
+                <ThemeSwitcher />
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
@@ -98,7 +124,7 @@ export function AppShell() {
       </main>
 
       <footer className="mt-12 border-t border-border pt-4 font-mono text-[11px] text-muted-foreground">
-        Tanmatsu firmware demo · simulated hardware telemetry · build 0.4.2
+        The Grimoir · Satan Foundation field interface · build 0.4.2
       </footer>
     </div>
   )

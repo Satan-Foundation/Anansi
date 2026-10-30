@@ -24,7 +24,7 @@ type AegisState = {
 
 const AegisContext = createContext<AegisState | null>(null)
 
-const THEMES: ThemeName[] = ["civic", "tactical", "cyberpunk"]
+const THEMES: ThemeName[] = ["civic", "tactical", "cyberpunk", "infernal"]
 
 export function AegisProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<ThemeName>("civic")

@@ -7,6 +7,7 @@ const OPTIONS: { id: ThemeName; label: string; hint: string }[] = [
   { id: "civic", label: "Civic", hint: "Clean institutional" },
   { id: "tactical", label: "Tactical", hint: "Field HUD" },
   { id: "cyberpunk", label: "Cyber", hint: "Decentralized" },
+  { id: "infernal", label: "Infernal", hint: "Red, black, gold, and white" },
 ]
 
 export function ThemeSwitcher() {

@@ -8,6 +8,8 @@
 #include "esp_log.h"
 #include "esp_system.h"
 #include "driver/gpio.h"
+#include "nvs_flash.h"
+#include "bsp/device.h"
 #include "pax_gfx.h"
 #include "pax_fonts.h"
 
@@ -22,7 +24,15 @@
 
 static const char *TAG = "aegis";
 static pax_buf_t framebuffer;
-static uint8_t framebuffer_storage[SCREEN_WIDTH * SCREEN_HEIGHT * 2] __attribute__((aligned(4)));
+static size_t display_width;
+static size_t display_height;
+static lcd_color_rgb_pixel_format_t display_format;
+static lcd_rgb_data_endian_t display_endian;
+static QueueHandle_t input_event_queue;
+
+static void blit(void) {
+    bsp_display_blit(0, 0, display_width, display_height, pax_buf_get_pixels(&framebuffer));
+}
 
 typedef enum {
     SCREEN_HOME,
@@ -90,7 +100,7 @@ static void outline(int x, int y, int w, int h, uint16_t color) {
 
 static void draw_header(const char *title) {
     rect(0, 0, SCREEN_WIDTH, HEADER_HEIGHT, 0x102033);
-    text("AEGIS", 28, 16, 22, 0xD7F7FF);
+    text("GRIMOIR", 28, 16, 22, 0xD7F7FF);
     text(title, 148, 19, 14, 0x8BA8B7);
     text(state.simulation ? "SIMULATION" : "LIVE", 626, 19, 12, 0xF6C76B);
     rect(746, 19, 10, 10, 0x4ADE80);
@@ -213,15 +223,40 @@ static void handle_input(void) {
 }
 
 void app_main(void) {
-    ESP_LOGI(TAG, "Starting AEGIS Tanmatsu firmware demo");
+    ESP_LOGI(TAG, "Starting The Grimoir standalone firmware");
     ESP_LOGW(TAG, "SIMULATION mode: identity, mesh, and verification are not cryptographic");
-    pax_buf_init(&framebuffer, framebuffer_storage, SCREEN_WIDTH, SCREEN_HEIGHT, PAX_BUF_16_565);
+
+    esp_err_t nvs_result = nvs_flash_init();
+    if (nvs_result == ESP_ERR_NVS_NO_FREE_PAGES || nvs_result == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        nvs_result = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(nvs_result);
+
+    const bsp_configuration_t bsp_configuration = {
+        .display = {
+            .requested_color_format = LCD_COLOR_PIXEL_FORMAT_RGB565,
+            .num_fbs = 1,
+        },
+    };
+    ESP_ERROR_CHECK(bsp_device_initialize(&bsp_configuration));
+    ESP_ERROR_CHECK(bsp_display_get_parameters(&display_width, &display_height, &display_format, &display_endian));
+    ESP_ERROR_CHECK(bsp_input_get_queue(&input_event_queue));
+
+    pax_buf_type_t buffer_type = display_format == LCD_COLOR_PIXEL_FORMAT_RGB888
+        ? PAX_BUF_24_888RGB
+        : PAX_BUF_16_565;
+    pax_buf_init(&framebuffer, NULL, display_width, display_height, buffer_type);
+    pax_buf_reversed(&framebuffer, display_endian == LCD_RGB_DATA_ENDIAN_BIG);
+
     gpio_set_direction(GPIO_NUM_0, GPIO_MODE_INPUT);
     gpio_set_direction(GPIO_NUM_1, GPIO_MODE_INPUT);
     draw_screen();
+    blit();
     while (true) {
         handle_input();
         draw_screen();
+        blit();
         vTaskDelay(pdMS_TO_TICKS(33));
     }
 }
